@@ -36,7 +36,7 @@ dbHandler.create()
 dbHandler.populate()
 
 // Adding a route to handle the root list
-routes.add(method: .get, uri: "/", handler: {
+routes.add(method: .get, uri: "/htmlPerfect", handler: {
 	request, response in
 
 	// Setting the response content type explicitly to text/html
@@ -46,11 +46,28 @@ routes.add(method: .get, uri: "/", handler: {
 		request: request,
 		response: response,
 		handler: ListHandler(),
-		templatePath: request.documentRoot + "/index.mustache"
+		templatePath: request.documentRoot + "/htmlPerfect.mustache"
 	)
 	// Signalling that the request is completed
 	response.completed()
 	}
+)
+
+routes.add(method: .get, uri: "/htmlLargePerfect", handler: {
+    request, response in
+    
+    // Setting the response content type explicitly to text/html
+    response.setHeader(.contentType, value: "text/html")
+    // Setting the body response to the generated list via Mustache
+    mustacheRequest(
+        request: request,
+        response: response,
+        handler: ListHandler(),
+        templatePath: request.documentRoot + "/htmlLargePerfect.mustache"
+    )
+    // Signalling that the request is completed
+    response.completed()
+}
 )
 
 // Serve a story
